@@ -103,6 +103,10 @@ h2 {
   padding-bottom: 0.5rem;
 }
 
+.poem-section + .poem-section h2 {
+  margin-top: 2rem;
+}
+
 pre {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid #333;

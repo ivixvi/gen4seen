@@ -11,8 +11,14 @@ interface PoemFormData {
   bloodType: string;
 }
 
-// 入力データから決定論的なシード値を生成する
-function createSeed(data: PoemFormData): string {
+export interface Poems {
+  early: string;
+  mid: string;
+  late: string;
+}
+
+// 入力データから決定論的なシード値の元を生成する
+function createBaseSeed(data: PoemFormData): string {
   return `${data.year}-${data.month}-${data.name}-${data.birthdate}-${data.bloodType}`;
 }
 
@@ -22,18 +28,16 @@ function getRandomElement<T>(rng: () => number, array: T[]): T {
   return array[index];
 }
 
-// 詩を生成するメイン関数
-export function generatePoem(formData: PoemFormData): string {
-  const seed = createSeed(formData);
+// 1つの詩を生成する内部関数
+function generateSinglePoem(seed: string): string {
   const rng = seedrandom(seed);
 
-  // 1. 詩のテンプレートを選択
+  // 1. 詩のテ���プレートを選択
   let poemTemplate = getRandomElement(rng, templates);
 
   // 2. テンプレート内のプレースホルダーを単語で置換
   let generatedPoem = poemTemplate;
   Object.entries(words).forEach(([placeholder, wordList]) => {
-    // テンプレート内のすべてのプレースホルダーを置換する
     while (generatedPoem.includes(placeholder)) {
       const randomWord = getRandomElement(rng, wordList);
       generatedPoem = generatedPoem.replace(placeholder, randomWord);
@@ -41,4 +45,15 @@ export function generatePoem(formData: PoemFormData): string {
   });
 
   return generatedPoem;
+}
+
+// 3つの詩（上旬・中旬・下旬）を生成するメイン関数
+export function generatePoems(formData: PoemFormData): Poems {
+  const baseSeed = createBaseSeed(formData);
+
+  return {
+    early: generateSinglePoem(baseSeed + '-early'),
+    mid: generateSinglePoem(baseSeed + '-mid'),
+    late: generateSinglePoem(baseSeed + '-late'),
+  };
 }
