@@ -1,9 +1,19 @@
 // src/components/PoemForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+interface FormData {
+  year: string;
+  month: string;
+  name: string;
+  birthdate: string;
+  bloodType: string;
+}
 
 interface PoemFormProps {
-  onGenerate: (formData: { year: string; month: string; name: string; birthdate: string; bloodType: string; }) => void;
+  onGenerate: (formData: FormData) => void;
 }
+
+const STORAGE_KEY = 'poemGeneratorFormData';
 
 const PoemForm: React.FC<PoemFormProps> = ({ onGenerate }) => {
   const now = new Date();
@@ -13,13 +23,38 @@ const PoemForm: React.FC<PoemFormProps> = ({ onGenerate }) => {
   const [birthdate, setBirthdate] = useState('');
   const [bloodType, setBloodType] = useState('A');
 
+  // Load data from local storage on initial render
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        if (parsedData.name) setName(parsedData.name);
+        if (parsedData.birthdate) setBirthdate(parsedData.birthdate);
+        if (parsedData.bloodType) setBloodType(parsedData.bloodType);
+      }
+    } catch (error) {
+      console.error("Failed to parse form data from local storage", error);
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = { year, month, name, birthdate, bloodType };
     if (!year || !month || !name || !birthdate) {
       alert('すべての必須項目を入力してください。');
       return;
     }
-    onGenerate({ year, month, name, birthdate, bloodType });
+
+    // Save data to local storage
+    try {
+      const dataToSave = { name, birthdate, bloodType };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+    } catch (error) {
+      console.error("Failed to save form data to local storage", error);
+    }
+
+    onGenerate(formData);
   };
 
   return (
