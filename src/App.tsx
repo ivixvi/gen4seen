@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      <h1>四行詩ジェネレーター「天使の自動筆記」</h1>
+      <h1>四行詩ジェネレーター</h1>
       <PoemForm onGenerate={handleGeneratePoem} />
       <PoemDisplay poem={poem} />
     </>
