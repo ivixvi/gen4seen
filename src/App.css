@@ -60,6 +60,21 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(199, 165, 255, 0.2);
 }
 
+.year-month-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.year-month-container input[type="number"] {
+  width: auto;
+  flex: 1;
+}
+
+.year-month-container span {
+  color: #aaa;
+}
+
 button {
   font-family: inherit;
   font-size: 1.1em;

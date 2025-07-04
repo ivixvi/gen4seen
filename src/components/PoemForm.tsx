@@ -2,38 +2,52 @@
 import React, { useState } from 'react';
 
 interface PoemFormProps {
-  onGenerate: (formData: { month: string; name: string; birthdate: string; bloodType: string; }) => void;
+  onGenerate: (formData: { year: string; month: string; name: string; birthdate: string; bloodType: string; }) => void;
 }
 
 const PoemForm: React.FC<PoemFormProps> = ({ onGenerate }) => {
-  const [month, setMonth] = useState('');
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear().toString());
+  const [month, setMonth] = useState((now.getMonth() + 1).toString()); // getMonth() is 0-indexed
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [bloodType, setBloodType] = useState('A');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!month || !name || !birthdate) {
+    if (!year || !month || !name || !birthdate) {
       alert('すべての必須項目を入力してください。');
       return;
     }
-    onGenerate({ month, name, birthdate, bloodType });
+    onGenerate({ year, month, name, birthdate, bloodType });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="month">占う対象の月:</label>
-        <input
-          type="number"
-          id="month"
-          name="month"
-          min="1"
-          max="12"
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-          required
-        />
+        <label htmlFor="year">占う対象の年月:</label>
+        <div className="year-month-container">
+          <input
+            type="number"
+            id="year"
+            name="year"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            required
+          />
+          <span>年</span>
+          <input
+            type="number"
+            id="month"
+            name="month"
+            min="1"
+            max="12"
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+            required
+          />
+          <span>月</span>
+        </div>
       </div>
       <div>
         <label htmlFor="name">名前:</label>

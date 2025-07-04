@@ -7,6 +7,7 @@ import { generatePoem } from './lib/poemGenerator'; // 詩生成ロジックを�
 
 // PoemFormから渡されるデータの型を定義
 interface FormData {
+  year: string;
   month: string;
   name: string;
   birthdate: string;
