@@ -32,8 +32,8 @@ function getRandomElement<T>(rng: () => number, array: T[]): T {
 function generateSinglePoem(seed: string): string {
   const rng = seedrandom(seed);
 
-  // 1. 詩のテ���プレートを選択
-  let poemTemplate = getRandomElement(rng, templates);
+  // 1. 詩のテンプレートを選択
+  let poemTemplate = [...new Array(4)].map(()=>getRandomElement(rng, templates)).join('\n');
 
   // 2. テンプレート内のプレースホルダーを単語で置換
   let generatedPoem = poemTemplate;
