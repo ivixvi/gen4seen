@@ -4,23 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bunx --bun vite",
-    "build": "tsc -b && bunx --bun vite build",
+    "dev": "bun x --bun vite",
+    "build": "tsc -b && bun x --bun vite build",
     "lint": "biome format --write . && biome check --apply .",
-    "preview": "bunx --bun vite preview"
+    "preview": "bun x --bun vite preview"
   },
   "dependencies": {
     "@types/seedrandom": "^3.0.8",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.2",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.3",
     "biome": "^0.3.3",
-    "typescript": "~5.8.3",
-    "vite": "^7.0.0"
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
   }
 }
